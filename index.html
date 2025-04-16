@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>中文情感分析</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 40px;
+      max-width: 600px;
+      margin: auto;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>中文情感分析器</h1>
+  <p>请输入一句中文，我将判断它是积极还是消极：</p>
+  <textarea id="inputText" placeholder="例如：我今天很开心"></textarea>
+  <br>
+  <button onclick="analyze()">分析情感</button>
+  <div id="result"></div>
+
+  <script>
+    const positiveWords = ['开心', '高兴', '幸福', '喜欢', '爱', '满意', '棒', '不错', '赞'];
+    const negativeWords = ['难过', '生气', '悲伤', '讨厌', '痛苦', '失望', '糟糕', '不好', '烦'];
+
+    function analyze() {
+      const text = document.getElementById('inputText').value;
+      let score = 0;
+
+      positiveWords.forEach(word => {
+        if (text.includes(word)) score += 1;
+      });
+
+      negativeWords.forEach(word => {
+        if (text.includes(word)) score -= 1;
+      });
+
+      let resultText = '';
+      if (score > 0) {
+        resultText = '情感判断：积极 😊';
+      } else if (score < 0) {
+        resultText = '情感判断：消极 😞';
+      } else {
+        resultText = '情感判断：中性 😐（未能识别明显情感）';
+      }
+
+      document.getElementById('result').innerText = resultText;
+    }
+  </script>
+</body>
+</html>
